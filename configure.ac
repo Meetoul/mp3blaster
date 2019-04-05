@@ -5,9 +5,7 @@ AC_CONFIG_SRCDIR([src/mp3blaster.h])
 AM_INIT_AUTOMAKE
 
 #Custom C++ flags - later options override earlier ones
-if [ -z "$CXXFLAGS" ] ; then
-	CXXFLAGS="-O2 -Wall -W -fno-strength-reduce"
-fi
+CXXFLAGS="-O2 -Wall -W -fno-strength-reduce -std=c++11 -Wno-narrowing"
 
 AM_CONFIG_HEADER(config.h)
 
