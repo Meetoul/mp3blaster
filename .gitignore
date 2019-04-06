@@ -35,7 +35,6 @@ src/splay
 **/Makefile
 **/.deps
 *~
-config.h
 compile
 config.log
 config.status
@@ -44,3 +43,6 @@ autom4te.cache
 
 # Editor temp files
 **/*.swp
+
+# CMake build directory
+build
