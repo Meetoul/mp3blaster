@@ -120,6 +120,7 @@ struct _globalopts /* global options, exported for other classes */
 	short selectitems_caseinsensitive;
 	short scan_mp3s;
 	bool wraplist;	// non-zero if user wants scrollwins to wrap on scrolling
+    bool lynx; // enable lynx-style navigation in file selecting mode
 	short pan_size;
 	audiodevice_t audio_driver;
 };

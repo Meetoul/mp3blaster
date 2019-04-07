@@ -59,6 +59,8 @@
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
 #endif
+#include <stack>
+
 #include "global.h"
 #include "scrollwin.h"
 #include "mp3win.h"
@@ -288,6 +290,8 @@ char
 	*status_file = NULL;
 fileManager
 	*file_window = NULL; /* window to select files with */
+std::stack<int> lynx_stack;
+
 scrollWin
 	*helpwin = NULL,
 	*bighelpwin = NULL;
@@ -539,6 +543,12 @@ fw_changedir(const char *newpath = 0)
 
 	selitems = file_window->getSelectedItems(&nselected);
 
+    if (globalopts.lynx) {
+        if (strcmp(path, "..")) {
+            lynx_stack.push(file_window->sw_selection);
+        }
+    }
+
 	/* if not changed to current dir and files have been selected add them to
 	 * the selection list 
 	 */
@@ -600,6 +610,16 @@ fw_changedir(const char *newpath = 0)
 			file_window->setItem(index);
 		free(foundItem);
 	}
+
+    if (globalopts.lynx) {
+        if (!strcmp(path, "..")) {
+            if (!lynx_stack.empty()) {
+               file_window->setItem(lynx_stack.top());
+               lynx_stack.pop();
+            }
+        }
+    }
+
 
 	refresh();
 }
@@ -3419,13 +3439,19 @@ handle_input(short no_delay)
 			if (progmode == PM_NORMAL)
 				sw->pan(-globalopts.pan_size);
 			else if (progmode == PM_FILESELECTION)
-				fm->pan(-globalopts.pan_size);
+                if(globalopts.lynx)
+                   fw_changedir("..");
+                else
+                    fm->pan(-globalopts.pan_size);
 		break;
 		case CMD_RIGHT:
 			if (progmode == PM_NORMAL)
 				sw->pan(globalopts.pan_size);
 			else if (progmode == PM_FILESELECTION)
-				fm->pan(globalopts.pan_size);
+                if(globalopts.lynx)
+                   fw_changedir();
+                else
+                    fm->pan(globalopts.pan_size);
 		break;
 		case CMD_TOGGLE_WRAP:
 			globalopts.wraplist = !globalopts.wraplist;
@@ -4635,7 +4661,8 @@ init_globalopts()
 	globalopts.selectitems_searchusingregexp = 0;
 	globalopts.selectitems_caseinsensitive = 1; //only works for regexp search
 	globalopts.scan_mp3s = 0; //scan mp3's to calculate correct total time.
-	globalopts.wraplist = true;
+    globalopts.wraplist = false;
+    globalopts.lynx = true;
 #if WANT_SDL
 	globalopts.audio_driver = AUDIODEV_SDL; //recommended for hick-free playback
 #elif WANT_OSS
