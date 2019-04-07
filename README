@@ -50,9 +50,10 @@ allows for very sophisticated playback orders.
 -------------------------
 
     If you're eager to start, this will do:
-        ./configure
-        make
-        make install
+        mkdir build
+        cd build
+        cmake ..
+        make -4
 
     Run './configure --help' to get a list of compile-time options.
     There are a few important options that can have an impact on the

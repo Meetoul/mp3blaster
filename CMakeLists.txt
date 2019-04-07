@@ -9,11 +9,6 @@ set(COMMON_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB BLASTER_SOURCE "src/*.cc")
 
-list(REMOVE_ITEM BLASTER_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/src/mp3tag.cc")
-list(REMOVE_ITEM BLASTER_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/src/splay_common.cc")
-list(REMOVE_ITEM BLASTER_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/src/splay.cc")
-
-
 find_package(Curses REQUIRED)
 find_package(Threads REQUIRED)
 find_package(SDL REQUIRED)
