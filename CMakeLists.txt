@@ -10,6 +10,9 @@ set(COMMON_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 file(GLOB BLASTER_SOURCE "src/*.cc")
 file(GLOB BLASTER_HEADER "src/*h")
 
+set(CURSES_NEED_NCURSES TRUE)
+set(CURSES_NEED_WIDE TRUE)
+
 find_package(Curses REQUIRED)
 find_package(Threads REQUIRED)
 find_package(SDL REQUIRED)
@@ -23,6 +26,8 @@ include_directories(
 )
 
 add_executable(mp3blaster ${BLASTER_SOURCE} ${BLASTER_HEADER})
+
+message("${CURSES_LIBRARIES}")
 
 target_link_libraries(mp3blaster
     libmpegsound

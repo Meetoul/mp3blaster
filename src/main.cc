@@ -60,6 +60,7 @@
 #include <errno.h>
 #endif
 #include <stack>
+#include <locale.h>
 
 #include "global.h"
 #include "scrollwin.h"
@@ -5426,6 +5427,7 @@ set_pan_size(int psize)
 int
 main(int argc, char *argv[], char *envp[])
 {
+    setlocale(LC_ALL, "");
 	int
 		c,
 		long_index,
@@ -5870,5 +5872,3 @@ main(int argc, char *argv[], char *envp[])
 	endwin();
 	return 0;
 }
-
-
