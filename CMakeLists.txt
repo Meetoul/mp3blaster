@@ -8,6 +8,7 @@ add_definitions(-DHAVE_CONFIG_H)
 set(COMMON_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB BLASTER_SOURCE "src/*.cc")
+file(GLOB BLASTER_HEADER "src/*h")
 
 find_package(Curses REQUIRED)
 find_package(Threads REQUIRED)
@@ -21,7 +22,7 @@ include_directories(
     ${SDL_INCLUDE_DIR}
 )
 
-add_executable(mp3blaster ${BLASTER_SOURCE})
+add_executable(mp3blaster ${BLASTER_SOURCE} ${BLASTER_HEADER})
 
 target_link_libraries(mp3blaster
     libmpegsound
